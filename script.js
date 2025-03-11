@@ -1,3 +1,4 @@
+// Função para alternar a exibição do chat
 function toggleChat() {
     var chatPopup = document.querySelector(".chat-popup");
     if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -7,6 +8,7 @@ function toggleChat() {
     }
 }
 
+// Seleção da pergunta para o chatbot
 function selectQuestion(question) {
     var chatBody = document.getElementById("chat-body");
     var menuButtons = document.getElementById("menu-buttons");
@@ -26,6 +28,7 @@ function selectQuestion(question) {
     menuButtons.style.display = "none";
 }
 
+// Respostas do chatbot com base na pergunta
 function getBotResponse(question) {
     if (question === "horario") {
         return "Nosso atendimento é de segunda a sexta, das 9h às 18h.";
@@ -40,6 +43,7 @@ function getBotResponse(question) {
     }
 }
 
+// Função para voltar ao menu do chatbot
 function backToMenu() {
     var chatBody = document.getElementById("chat-body");
     var menuButtons = document.getElementById("menu-buttons");
@@ -51,16 +55,16 @@ function backToMenu() {
     menuButtons.style.display = "flex";
 }
 
-// Correção do botão WhatsApp para evitar conflito com o chat
+// Correção do botão WhatsApp para enviar a mensagem
 document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
     event.stopPropagation(); // Evita conflito com o chatbot
-    var message = "Olá! Quero brilhar mais com a Brillê."; // Mensagem que será enviada ao WhatsApp
+    var message = "Olá! Quero brilhar mais com a Brillê."; // Mensagem personalizada
     var phone = "5519997763354"; // Seu número de WhatsApp
     var url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 });
 
-// Função do Chatbot (ajustando para não fechar ao clicar fora)
+// Função para garantir que o chatbot seja alternado corretamente
 function toggleChat(event) {
     // Verifica se o clique foi fora do chatbot ou no botão de WhatsApp
     if (event.target.closest(".whatsapp-button") || event.target.closest(".chat-popup")) {
