@@ -1,13 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Brillê</title>
-        <link href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brillê</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            margin: 0;
+        }
+
+        /* Botão WhatsApp */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #25d366;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        .whatsapp-button img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Botão Chatbot */
+        .chatbot-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #007bff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        .chatbot-button img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Chatbot Popup */
+        .chat-popup {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: none;
+            z-index: 999;
+        }
+
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            padding: 10px;
+            font-size: 14px;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .chat-buttons {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .chat-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .chat-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* Seção Hero */
+        .hero {
+            background-color: #f8f8f8;
+            padding: 50px 0;
+        }
+
+        .hero h2 {
+            font-size: 2em;
+            color: #007bff;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .hero .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .hero .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
     <!-- Botão de WhatsApp -->
     <a href="#" class="whatsapp-button">
         <img src="images/whatsapp-icon.png" alt="WhatsApp">
@@ -53,6 +205,74 @@
         <a href="#" class="btn">Conheça nossa coleção</a>
     </section>
 
-    <script src="script.js"></script>
+    <script>
+        // Função para alternar a exibição do chat
+        function toggleChat() {
+            var chatPopup = document.querySelector(".chat-popup");
+            if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+                chatPopup.style.display = "block";
+            } else {
+                chatPopup.style.display = "none";
+            }
+        }
+
+        // Seleção da pergunta para o chatbot
+        function selectQuestion(question) {
+            var chatBody = document.getElementById("chat-body");
+            var menuButtons = document.getElementById("menu-buttons");
+
+            // Limpar o conteúdo atual do chat
+            chatBody.innerHTML = "";
+
+            // Exibir a resposta e a opção de voltar
+            var response = getBotResponse(question);
+            chatBody.innerHTML += `<p><strong>Maya:</strong> ${response}</p>`;
+
+            // Botão de voltar ao menu
+            chatBody.innerHTML += `<button id="back-button" onclick="backToMenu()">🔙 Voltar ao menu</button>`;
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Esconder as perguntas
+            menuButtons.style.display = "none";
+        }
+
+        // Respostas do chatbot com base na pergunta
+        function getBotResponse(question) {
+            if (question === "horario") {
+                return "Nosso atendimento é de segunda a sexta, das 9h às 18h.";
+            } else if (question === "entrega") {
+                return "O prazo de entrega varia de acordo com a sua localização. Normalmente entre 3 a 7 dias úteis.";
+            } else if (question === "pagamento") {
+                return "Aceitamos cartão de crédito, Pix e boleto bancário.";
+            } else if (question === "troca") {
+                return "Você pode solicitar troca ou devolução em até 7 dias após o recebimento.";
+            } else {
+                return "Desculpe, não entendi. Poderia reformular a pergunta? 😊";
+            }
+        }
+
+        // Função para voltar ao menu do chatbot
+        function backToMenu() {
+            var chatBody = document.getElementById("chat-body");
+            var menuButtons = document.getElementById("menu-buttons");
+
+            // Limpar as respostas
+            chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
+
+            // Exibir as opções de perguntas
+            menuButtons.style.display = "flex";
+        }
+
+        // Correção do botão WhatsApp para enviar a mensagem corretamente
+        document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
+            event.stopPropagation(); // Evita conflito com o chatbot
+
+            // URL com a mensagem para o WhatsApp
+            var url = "https://api.whatsapp.com/send?phone=5519997763354&text=Olá!%20Quero%20brilhar%20mais%20com%20a%20brillê.";
+
+            // Abrir o WhatsApp
+            window.open(url, "_blank");
+        });
+    </script>
 </body>
 </html>
