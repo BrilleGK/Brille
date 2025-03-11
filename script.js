@@ -58,9 +58,7 @@ function backToMenu() {
 // Correção do botão WhatsApp para enviar a mensagem
 document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
     event.stopPropagation(); // Evita conflito com o chatbot
-    var message = "Olá! Quero brilhar mais com a Brillê."; // Mensagem personalizada
-    var phone = "5519997763354"; // Seu número de WhatsApp
-    var url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
+    var url = "https://api.whatsapp.com/send?phone=5519997763354&text=Olá!%20Quero%20brilhar%20mais%20com%20a%20brillê."; // Link com a mensagem
     window.open(url, "_blank");
 });
 
