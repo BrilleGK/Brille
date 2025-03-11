@@ -1,4 +1,4 @@
-// Função para alternar a exibição do chat  
+// Função para alternar a exibição do chat
 function toggleChat() {
     var chatPopup = document.querySelector(".chat-popup");
     if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -43,35 +43,23 @@ function getBotResponse(question) {
     }
 }
 
-// Função para voltar ao menu do chatbot
+// Função para voltar ao menu do chatbot (garantindo que o chat não seja fechado)
 function backToMenu() {
     var chatBody = document.getElementById("chat-body");
     var menuButtons = document.getElementById("menu-buttons");
 
-    // Limpar as respostas e mostrar a mensagem inicial do chatbot
+    // Limpar as respostas e exibir o menu novamente
     chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
 
-    // Exibir as opções de perguntas novamente
+    // Exibir as opções de perguntas
     menuButtons.style.display = "flex";
 }
 
 // Correção do botão WhatsApp para enviar a mensagem corretamente
 document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
     event.stopPropagation(); // Evita conflito com o chatbot
-
-    // Detectar se o dispositivo é móvel ou desktop
-    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-
-    // URL com a mensagem para o WhatsApp
-    var url = "https://api.whatsapp.com/send?phone=5519997763354&text=Olá!%20Quero%20brilhar%20mais%20com%20a%20brillê.";
-
-    if (isMobile) {
-        // Se for um dispositivo móvel, abrir diretamente o WhatsApp com a mensagem
-        window.location.href = url;
-    } else {
-        // Se for um desktop, abre o WhatsApp Web em uma nova aba
-        window.open(url, "_blank");
-    }
+    var url = "https://api.whatsapp.com/send?phone=5519997763354&text=Olá!%20Quero%20brilhar%20mais%20com%20a%20brillê."; // Link com a mensagem
+    window.open(url, "_blank");
 });
 
 // Função para garantir que o chatbot seja alternado corretamente
@@ -91,3 +79,9 @@ function toggleChat(event) {
 
 // Adicionando o evento para chamar toggleChat
 document.addEventListener("click", toggleChat);
+
+// Inicializando a mensagem de boas-vindas do chatbot
+document.addEventListener("DOMContentLoaded", function() {
+    var chatBody = document.getElementById("chat-body");
+    chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
+});
