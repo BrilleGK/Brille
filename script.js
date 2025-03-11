@@ -66,22 +66,4 @@ document.querySelector(".whatsapp-button").addEventListener("click", function(ev
 function toggleChat(event) {
     // Verifica se o clique foi fora do chatbot ou no botão de WhatsApp
     if (event.target.closest(".whatsapp-button") || event.target.closest(".chat-popup")) {
-        return; // Não faz nada se o clique foi no WhatsApp ou no chat
-    }
-    
-    var chatPopup = document.querySelector(".chat-popup");
-    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
-        chatPopup.style.display = "block";
-    } else {
-        chatPopup.style.display = "none";
-    }
-}
-
-// Adicionando o evento para chamar toggleChat
-document.addEventListener("click", toggleChat);
-
-// Inicializar o chat com a mensagem de boas-vindas
-document.addEventListener("DOMContentLoaded", function() {
-    var chatBody = document.getElementById("chat-body");
-    chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
-});
+        return; // Não
