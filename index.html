@@ -13,23 +13,26 @@
         <img src="images/whatsapp-icon.png" alt="WhatsApp">
     </a>
 
-    <!-- Chat Popup -->
+    <div class="whatsapp-button" onclick="toggleChat()">
+        <img src="whatsapp-icon.png" alt="WhatsApp">
+    </div>
+    
     <div class="chat-popup">
         <div class="chat-header">
-            Maya - Assistente Virtual
+            <span>Maya, seu assistente virtual</span>
             <button onclick="toggleChat()">X</button>
         </div>
         <div class="chat-body" id="chat-body">
             <p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>
         </div>
         <div class="chat-buttons" id="menu-buttons">
-            <button onclick="selectQuestion('horario')">🕒 Horários</button>
-            <button onclick="selectQuestion('entrega')">🚚 Entrega</button>
-            <button onclick="selectQuestion('pagamento')">💳 Pagamento</button>
-            <button onclick="selectQuestion('troca')">🔄 Trocas</button>
+            <button onclick="selectQuestion('horario')">Qual é o horário de atendimento?</button>
+            <button onclick="selectQuestion('entrega')">Qual o prazo de entrega?</button>
+            <button onclick="selectQuestion('pagamento')">Quais formas de pagamento?</button>
+            <button onclick="selectQuestion('troca')">Como funciona a troca?</button>
         </div>
     </div>
-
+    
     <!-- Botão para abrir o chatbot -->
     <a href="#" class="chatbot-button" onclick="toggleChat()">
         <img src="images/maya.png" alt="Chatbot Maya">
