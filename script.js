@@ -50,3 +50,9 @@ function backToMenu() {
     // Exibir as opções de perguntas
     menuButtons.style.display = "flex";
 }
+
+// Correção do botão WhatsApp para evitar conflito com o chat
+document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
+    event.stopPropagation(); // Evita que o clique afete o chat
+    window.open("https://api.whatsapp.com/send?phone=5519997763354", "_blank");
+});
