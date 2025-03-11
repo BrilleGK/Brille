@@ -53,6 +53,24 @@ function backToMenu() {
 
 // Correção do botão WhatsApp para evitar conflito com o chat
 document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
-    event.stopPropagation(); // Evita que o clique afete o chat
+    event.stopPropagation(); // Evita conflito com o chatbot
     window.open("https://api.whatsapp.com/send?phone=5519997763354", "_blank");
 });
+
+// Função do Chatbot (ajustando para não fechar ao clicar fora)
+function toggleChat(event) {
+    // Verifica se o clique foi fora do chatbot ou no botão de WhatsApp
+    if (event.target.closest(".whatsapp-button") || event.target.closest(".chat-popup")) {
+        return; // Não faz nada se o clique foi no WhatsApp ou no chat
+    }
+    
+    var chatPopup = document.querySelector(".chat-popup");
+    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+    } else {
+        chatPopup.style.display = "none";
+    }
+}
+
+// Adicionando o evento para chamar toggleChat
+document.addEventListener("click", toggleChat);
