@@ -1,63 +1,93 @@
-// Toggle o chat
+// Função para alternar a exibição do chat 
 function toggleChat() {
-    const chatPopup = document.getElementById("chat-popup");
-    if (chatPopup.style.display === "block") {
-      chatPopup.style.display = "none";
+    var chatPopup = document.querySelector(".chat-popup");
+    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
     } else {
-      chatPopup.style.display = "block";
+        chatPopup.style.display = "none";
     }
-  }
-  
-  // Função de resposta do chatbot
-  function selectQuestion(question) {
-    const chatBody = document.getElementById('chat-body');
-    const menuButtons = document.getElementById('menu-buttons');
-    
-    chatBody.innerHTML = `<p><strong>Maya:</strong> ${getBotResponse(question)}</p>`;
-    chatBody.innerHTML += `<button onclick="backToMenu()">🔙 Voltar ao menu</button>`;
-    menuButtons.style.display = 'none';
-  }
-  
-  // Respostas do chatbot
-  function getBotResponse(question) {
-    switch (question) {
-      case 'horario':
-        return 'Nosso horário de atendimento é de segunda a sexta-feira, das 9h às 18h.';
-      case 'entrega':
-        return 'O prazo de entrega pode variar entre 3 a 7 dias úteis, dependendo da sua localização.';
-      case 'pagamento':
-        return 'Aceitamos pagamento via Pix, cartão de crédito e boleto bancário.';
-      case 'troca':
-        return 'Você pode realizar trocas em até 7 dias após o recebimento do produto.';
-      default:
-        return 'Desculpe, não entendi. Por favor, reformule sua pergunta.';
+}
+
+// Seleção da pergunta para o chatbot
+function selectQuestion(question) {
+    var chatBody = document.getElementById("chat-body");
+    var menuButtons = document.getElementById("menu-buttons");
+
+    // Limpar o conteúdo atual do chat
+    chatBody.innerHTML = "";
+
+    // Exibir a resposta e a opção de voltar
+    var response = getBotResponse(question);
+    chatBody.innerHTML += `<p><strong>Maya:</strong> ${response}</p>`;
+
+    // Botão de voltar ao menu
+    chatBody.innerHTML += `<button id="back-button" onclick="backToMenu()">🔙 Voltar ao menu</button>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Esconder as perguntas
+    menuButtons.style.display = "none";
+}
+
+// Respostas do chatbot com base na pergunta
+function getBotResponse(question) {
+    if (question === "horario") {
+        return "Nosso atendimento é de segunda a sexta, das 9h às 18h.";
+    } else if (question === "entrega") {
+        return "O prazo de entrega varia de acordo com a sua localização. Normalmente entre 3 a 7 dias úteis.";
+    } else if (question === "pagamento") {
+        return "Aceitamos cartão de crédito, Pix e boleto bancário.";
+    } else if (question === "troca") {
+        return "Você pode solicitar troca ou devolução em até 7 dias após o recebimento.";
+    } else {
+        return "Desculpe, não entendi. Poderia reformular a pergunta? 😊";
     }
-  }
-  
-  // Voltar ao menu principal do chatbot
-  function backToMenu() {
-    const chatBody = document.getElementById('chat-body');
-    const menuButtons = document.getElementById('menu-buttons');
-    
-    chatBody.innerHTML = `<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>`;
-    menuButtons.style.display = 'flex';
-  }
-  
-  // WhatsApp - Link Dinâmico
-  document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
-    event.preventDefault();
-    
-    const whatsappNumber = "5519997763354"; // Seu número de WhatsApp
-    const message = encodeURIComponent("Olá! Quero Brilhar mais com Brillê.");
-    const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
-    
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  
-    // Redireciona para o WhatsApp
+}
+
+// Função para voltar ao menu do chatbot
+function backToMenu() {
+    var chatBody = document.getElementById("chat-body");
+    var menuButtons = document.getElementById("menu-buttons");
+
+    // Limpar as respostas
+    chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
+
+    // Exibir as opções de perguntas
+    menuButtons.style.display = "flex";
+}
+
+// Correção do botão WhatsApp para enviar a mensagem corretamente
+document.querySelector(".whatsapp-button").addEventListener("click", function(event) {
+    event.stopPropagation(); // Evita conflito com o chatbot
+
+    // Detectar se o dispositivo é móvel ou desktop
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    // URL com a mensagem para o WhatsApp
+    var url = "https://api.whatsapp.com/send?phone=5519997763354&text=Olá!%20Quero%20brilhar%20mais%20com%20a%20brillê.";
+
     if (isMobile) {
-      window.location.href = url;
+        // Se for um dispositivo móvel, abrir diretamente o WhatsApp com a mensagem
+        window.location.href = url;
     } else {
-      window.open(url, "_blank");
+        // Se for um desktop, abre o WhatsApp Web em uma nova aba
+        window.open(url, "_blank");
     }
-  });
-  
+});
+
+// Função para garantir que o chatbot seja alternado corretamente
+function toggleChat(event) {
+    // Verifica se o clique foi fora do chatbot ou no botão de WhatsApp
+    if (event.target.closest(".whatsapp-button") || event.target.closest(".chat-popup")) {
+        return; // Não faz nada se o clique foi no WhatsApp ou no chat
+    }
+    
+    var chatPopup = document.querySelector(".chat-popup");
+    if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
+        chatPopup.style.display = "block";
+    } else {
+        chatPopup.style.display = "none";
+    }
+}
+
+// Adicionando o evento para chamar toggleChat
+document.addEventListener("click", toggleChat);
