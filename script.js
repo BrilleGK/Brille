@@ -1,4 +1,4 @@
-// Função para alternar a exibição do chat 
+// Função para alternar a exibição do chat  
 function toggleChat() {
     var chatPopup = document.querySelector(".chat-popup");
     if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -48,10 +48,10 @@ function backToMenu() {
     var chatBody = document.getElementById("chat-body");
     var menuButtons = document.getElementById("menu-buttons");
 
-    // Limpar as respostas
+    // Limpar as respostas e mostrar a mensagem inicial do chatbot
     chatBody.innerHTML = "<p><strong>Maya:</strong> Olá! Como posso te ajudar? 😊</p>";
 
-    // Exibir as opções de perguntas
+    // Exibir as opções de perguntas novamente
     menuButtons.style.display = "flex";
 }
 
