@@ -65,7 +65,7 @@ function isMobile() {
 if (isMobile()) {
     var whatsappButton = document.querySelector(".whatsapp-button");
     whatsappButton.addEventListener("click", function () {
-        window.location.href = "https://wa.me/1234567890"; // Substitua pelo seu número de WhatsApp
+        window.location.href = "https://wa.me/5519997763354"; // Substitua pelo seu número de WhatsApp
     });
 }
 
